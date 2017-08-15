@@ -40,14 +40,16 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println("Enter the motor number to run : ");
-  while (!Serial.available());
-  int motor_Number = Serial.parseInt();
-  Serial.println("Enter State : [1 to run in STD DIR (out), 0 to turn OFF, 2 to run in OPP DIR (in)] : ");
-  while (!Serial.available());
-  int motorDirection = Serial.parseInt();
-  Serial.println("Running motor " + String(motor_Number) + " in " + String(motorDirection) + " DIR");
-  switch (motor_Number) {
+
+  /*
+    Serial.println("Enter the motor number to run : ");
+    while (!Serial.available());
+    int motor_Number = Serial.parseInt();
+    Serial.println("Enter State : [1 to run in STD DIR (out), 0 to turn OFF, 2 to run in OPP DIR (in)] : ");
+    while (!Serial.available());
+    int motorDirection = Serial.parseInt();
+    Serial.println("Running motor " + String(motor_Number) + " in " + String(motorDirection) + " DIR");
+    switch (motor_Number) {
     case 1:
       motor1.turn(motorDirection);
       break;
@@ -63,5 +65,29 @@ void loop() {
     default:
       Serial.println("INVALID MOTOR NUMBER ENCOUNTERED");
       break;
+    }
+  */
+  Serial.println("Enter the direction of the bot [W A S D control, <SPACE> to stop] : ");
+  while (!Serial.available());
+  char option = Serial.read();
+  switch (option) {
+    case 'W': motor1.turn(1); motor2.turn(1) ; motor3.turn(2); motor4.turn(2);
+    Serial.println("Moving Forward");
+    break;
+    case 'A': motor1.turn(2); motor2.turn(1) ; motor3.turn(1); motor4.turn(2); 
+    Serial.println("Moving Leftward");
+    break;
+    case 'S': motor1.turn(2); motor2.turn(2) ; motor3.turn(1); motor4.turn(1); 
+    Serial.println("Moving Backward");
+    break;
+    case 'D':  motor1.turn(1); motor2.turn(2) ; motor3.turn(2); motor4.turn(1); 
+    Serial.println("Moving Rightward");
+    break;
+    case ' ':
+     motor1.turn(0); motor2.turn(0) ; motor3.turn(0); motor4.turn(0); break;
+     Serial.println("Stopping Movement");
+     default:
+     Serial.println("An UNKNOWN ERROR (Code 101) ENCOUNTERED");
+     break;
   }
 }
